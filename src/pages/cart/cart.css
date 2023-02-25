@@ -6,23 +6,25 @@
 }
 
 .cartItem {
-  width: 700px;
-  height: 250px;
+  width: 650px;
+  height: 150px; 
   display: flex;
-
+  opacity: 0.75;
+  background:white;
   align-items: center;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
   border-radius: 25px;
-  margin: 30px;
+  margin: 5px;
+  padding-left:100px;
 }
 
 .cartItem img {
-  width: 200px;
+  width: 100px;
 }
 
 .cartItem .description {
   width: 100%;
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .countHandler input {
@@ -40,4 +42,5 @@
   border-radius: 8px;
   margin: 10px;
   cursor: pointer;
+  
 }

@@ -1,24 +1,40 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../../context/shop-context";
+import { Card, CardMedia, CardContent, CardActions, Typography } from '@mui/material';
 
-export const Product = (props) => {
-  const { id, productName, price, productImage } = props.data;
+import { Link } from "react-router-dom";
+
+export const Product = ({product}) => { //注意这里要解构product!!!
+
+  // console.log(product);//to make sure which property names of product we want to use
+
   const { addToCart, cartItems } = useContext(ShopContext);
 
-  const cartItemCount = cartItems[id];
+  const cartItemCount = cartItems[product.id];
+
 
   return (
-    <div className="product">
-      <img src={productImage} />
-      <div className="description">
-        <p>
-          <b>{productName}</b>
-        </p>
-        <p> ${price}</p>
-      </div>
-      <button className="addToCartBttn" onClick={() => addToCart(id)}>
-        Add To Cart {cartItemCount > 0 && <> ({cartItemCount})</>}
-      </button>
-    </div>
+      <Card sx={{maxWidth: '80%',':hover': {boxShadow: 10},}}>
+        <Link to={`/products/${product.id}`}> {/*click card to jump to product detail page */}
+          <CardMedia sx={{ height: 0,paddingTop: '100%'}} image={product.image.url} title={product.name} />
+        </Link>
+        <CardContent>
+          <div style={{display: 'flex',justifyContent: 'space-between'}}>
+            <Typography gutterBottom variant="h6" component="h2">
+              {product.name}
+            </Typography>
+            <Typography gutterBottom variant="h6" component="h2">
+              {product.price.formatted_with_symbol}
+            </Typography>
+          </div> 
+          <Typography dangerouslySetInnerHTML={{ __html: product.description }} variant="body2" color="textSecondary" component="p" />
+        </CardContent>
+        <CardActions disableSpacing sx={{display: 'flex',justifyContent: 'flex-end'}}>
+          <button className="addToCartBttn" onClick={() => addToCart(product.id)}>
+            Add To Cart {cartItemCount > 0 && <> ({cartItemCount})</>}
+          </button>
+        </CardActions>
+      </Card>
+    
   );
 };

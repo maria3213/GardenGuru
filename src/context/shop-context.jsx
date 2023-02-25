@@ -1,25 +1,51 @@
-import { createContext, useEffect, useState } from "react";
-import { PRODUCTS } from "../products";
+import { createContext,  useState,useEffect } from "react";
+// import { PRODUCTS } from "../products";
+import { commerce } from '../lib/commerce';
 
 export const ShopContext = createContext(null);
 
-const getDefaultCart = () => {
-  let cart = {};
-  for (let i = 1; i < PRODUCTS.length + 1; i++) {
-    cart[i] = 0;
-  }
-  return cart;
-};
 
 export const ShopContextProvider = (props) => {
-  const [cartItems, setCartItems] = useState(getDefaultCart());
 
-  const getTotalCartAmount = () => {
+  //for products:-----------------------------------------
+  const [products,setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState({});
+
+  //fetch products from commerce api to state
+  const fetchProducts = async () => {
+    const { data } = await commerce.products.list();
+
+    setProducts(data);
+  }
+  
+  useEffect(()=>{
+    fetchProducts();
+  },[]);//empty array means only run at the start on the render
+  //in class based components, this is called component mounts
+
+  //for cart's items:-----------------------------------------
+  const getDefaultCart = () => {
+    let cart = {};
+    for (let i = 0; i < products.length; i++) {
+      const product = products[i];
+      cart[product.id] = 0;
+    }
+    return cart;
+  }; //{[id1]: 0, [id2]: 0...}
+  const cartCount = getDefaultCart();
+    //fetch products immediately when page loads
+  
+  useEffect(() => { setCartItems(cartCount)}, [products] );//要加这个useEffect,否则无法set state,
+  //而且要加[products],否则产生infinite loop
+  // console.log(products)
+  //-----------------------------------------------------------
+  const getTotalCartAmount = () => { //get sum price in cart
     let totalAmount = 0;
-    for (const item in cartItems) {
+    for (const item in cartItems) { //loop through key: id
       if (cartItems[item] > 0) {
-        let itemInfo = PRODUCTS.find((product) => product.id === Number(item));
-        totalAmount += cartItems[item] * itemInfo.price;
+        let itemInfo = products.find((product) => product.id === item);
+        // console.log(itemInfo);
+        totalAmount += cartItems[item]* itemInfo.price.raw;
       }
     }
     return totalAmount;
@@ -29,8 +55,12 @@ export const ShopContextProvider = (props) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
   };
 
-  const removeFromCart = (itemId) => {
+  const decrementFromCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+  };
+
+  const removeFromCart = (itemId) => {
+    setCartItems((prev) => ({ ...prev, [itemId]: 0 }));
   };
 
   const updateCartItemCount = (newAmount, itemId) => {
@@ -42,9 +72,12 @@ export const ShopContextProvider = (props) => {
   };
 
   const contextValue = {
+    products,
+    setProducts,
     cartItems,
     addToCart,
     updateCartItemCount,
+    decrementFromCart,
     removeFromCart,
     getTotalCartAmount,
     checkout,
