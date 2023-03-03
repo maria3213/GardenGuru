@@ -11,7 +11,7 @@ export const Shop = () => {    //get products from App.js as props and immediate
   return (
     <div className="shop">
       <div className="shopTitle">
-        <h3>PedroTech Shop</h3>
+        <h3>Garden Guru —— Plants Shop</h3>
       </div>        
       <div className="products"> 
         {products.map((product) => {

@@ -3,6 +3,7 @@ import { createContext,  useState,useEffect } from "react";
 import { commerce } from '../lib/commerce';
 
 export const ShopContext = createContext(null);
+//create a store that have state and methods that are accessed for every components in the app
 
 
 export const ShopContextProvider = (props) => {
@@ -28,10 +29,12 @@ export const ShopContextProvider = (props) => {
     let cart = {};
     for (let i = 0; i < products.length; i++) {
       const product = products[i];
-      cart[product.id] = 0;
+      cart[product.id] = 0;//key:id,value:商品数量
     }
     return cart;
   }; //{[id1]: 0, [id2]: 0...}
+  //create a default cart obj that have all products with quantity of 0
+
   const cartCount = getDefaultCart();
     //fetch products immediately when page loads
   
@@ -67,7 +70,7 @@ export const ShopContextProvider = (props) => {
     setCartItems((prev) => ({ ...prev, [itemId]: newAmount }));
   };
 
-  const checkout = () => {
+  const checkout = () => {    //cart归零
     setCartItems(getDefaultCart());
   };
 

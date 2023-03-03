@@ -10,23 +10,12 @@ import { Details } from "./pages/shop/details/details";
 // import { useState,useEffect } from "react";
 
 function App() {
-  //create a state to store the products info
-  // const [products,setProducts] = useState([]);//default is an empty array
-  
-  
-
-  //fetch products immediately when page loads
-  // useEffect(()=>{
-  //   fetchProducts();
-  // },[]);//empty array means only run at the start on the render
-  //in class based components, this is called component mounts
-
 
   return (
     <div className="App">
-      <ShopContextProvider>
+      <ShopContextProvider> {/*包含了global state和method*/}
         <Router>
-          <Navbar /> 
+          <Navbar /> {/*在<Router>里但在<Routes>外:使Navbar在每个route里都有*/}
           <Routes>
             <Route path="/" element={<Shop />} />
             <Route path="/contact" element={<Contact />} />
