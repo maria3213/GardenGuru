@@ -3,8 +3,8 @@ import { ShopContext } from "../../context/shop-context";
 // import { PRODUCTS } from "../../products";
 import { CartItem } from "./cart-item";
 import { useNavigate } from "react-router-dom";
-import { Container, Typography, Grow, Grid,Button } from '@mui/material';
-import LocalMallIcon from '@mui/icons-material/LocalMall';
+import { Container, Grow, Grid } from '@mui/material';
+
 
 import "./cart.css";
 export const Cart = () => {
@@ -55,9 +55,10 @@ export const Cart = () => {
     ) : (
       <div style={{margin:"100px"}}>
         <h1> Your Shopping Cart is Empty</h1>
-        <Button variant="outlined" onClick={()=> navigate("/")} endIcon={<LocalMallIcon />}>
+        <button type="button" className="buy-now" onClick={() => navigate("/")}>Go Back to shop</button>
+        {/* <Button variant="outlined" onClick={()=> navigate("/")} endIcon={<LocalMallIcon />}>
           Go back to shopping 
-        </Button>
+        </Button> */}
         {/* <button onClick={()=> navigate("/")}> Go back to shopping </button> */}
       </div>
     )}

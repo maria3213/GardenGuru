@@ -29,7 +29,7 @@ export const Product = ({product}) => { //注意这里要解构product!!!
           </div> 
           <Typography dangerouslySetInnerHTML={{ __html: product.description }} variant="body2" color="textSecondary" component="p" />
         </CardContent>
-        <CardActions disableSpacing sx={{display: 'flex',justifyContent: 'flex-end'}}>
+        <CardActions sx={{display: 'flex',justifyContent: 'flex-end'}}>
           <button className="addToCartBttn" onClick={() => addToCart(product.id)}>
             Add To Cart {cartItemCount > 0 && <> ({cartItemCount})</>}
           </button>

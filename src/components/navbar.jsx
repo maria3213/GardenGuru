@@ -13,7 +13,7 @@ export const Navbar = () => {
                             alignItems: 'center',
                             display: 'flex',
                             textDecoration: 'none',}} color="inherit">
-          Oasis
+          GardenGuRu
         </Typography>
         <div style={{flexGrow: 1}} />
         <div className="links">

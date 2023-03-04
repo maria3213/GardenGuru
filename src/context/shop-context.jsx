@@ -12,17 +12,18 @@ export const ShopContextProvider = (props) => {
   const [products,setProducts] = useState([]);
   const [cartItems, setCartItems] = useState({});
 
-  //fetch products from commerce api to state
+  //fetch products from commerce api and set it to state
   const fetchProducts = async () => {
     const { data } = await commerce.products.list();
 
     setProducts(data);
   }
-  
+
   useEffect(()=>{
     fetchProducts();
   },[]);//empty array means only run at the start on the render
-  //in class based components, this is called component mounts
+  //for class based components, this is called component mounts
+  //if not use useEffect, whenever the state change, the components will re-render
 
   //for cart's items:-----------------------------------------
   const getDefaultCart = () => {
@@ -32,15 +33,21 @@ export const ShopContextProvider = (props) => {
       cart[product.id] = 0;//key:id,value:商品数量
     }
     return cart;
-  }; //{[id1]: 0, [id2]: 0...}
+  }; //{id1: 0, id2: 0...}
   //create a default cart obj that have all products with quantity of 0
 
-  const cartCount = getDefaultCart();
+  // const cartCount = getDefaultCart();
     //fetch products immediately when page loads
   
-  useEffect(() => { setCartItems(cartCount)}, [products] );//要加这个useEffect,否则无法set state,
-  //而且要加[products],否则产生infinite loop
-  // console.log(products)
+  useEffect(() => { 
+    setCartItems(getDefaultCart());
+  },[products] );//
+  //要加 dependency array,否则产生infinite loop
+  //不能使用[],要加上products,是因为最开始在mount时,products获取数据发生了update,然后由products更新引发这个callback
+  //,如果为空的话,说明最开始在mount时,products获取数据的同时(!)创建cartCount,此时还没有products,所以创建cartCount失败
+  //另外使用[cartCount]产生infinite loop
+
+
   //-----------------------------------------------------------
   const getTotalCartAmount = () => { //get sum price in cart
     let totalAmount = 0;

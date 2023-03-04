@@ -9,7 +9,7 @@ import { Details } from "./pages/shop/details/details";
 
 // import { useState,useEffect } from "react";
 
-function App() {
+const App = () => {
 
   return (
     <div className="App">

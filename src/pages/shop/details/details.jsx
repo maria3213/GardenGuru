@@ -1,4 +1,6 @@
 import React, { useState,useContext } from 'react';
+import { Typography } from '@mui/material';
+
 import { ShopContext } from "../../../context/shop-context";
 import "./details.css"
 import { useNavigate } from "react-router-dom";
@@ -31,7 +33,8 @@ export const Details = () => {
                 </div>
                 <h4>Details: </h4>
                 
-                <p>{currentProduct.description.slice(3,-4)}</p>
+                <Typography dangerouslySetInnerHTML={{ __html: currentProduct.description }} variant="body2" color="textSecondary" component="p" />
+
             </div>
         </div> 
 
