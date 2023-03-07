@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../../context/shop-context";
-import { Product } from "./product"; //component
+import { Product } from "./product"; 
 import "./shop.css";
 
 
-export const Shop = () => {    //get products from App.js as props and immediately destructure it 
+export const Shop = () => {   
   
   const { products } = useContext(ShopContext);
   

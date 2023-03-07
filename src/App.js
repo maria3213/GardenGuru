@@ -13,9 +13,9 @@ const App = () => {
 
   return (
     <div className="App">
-      <ShopContextProvider> {/*包含了global state和method*/}
+      <ShopContextProvider> 
         <Router>
-          <Navbar /> {/*在<Router>里但在<Routes>外:使Navbar在每个route里都有*/}
+          <Navbar /> {/*inside of <Router>while outside of<Routes>:Navbar in every route*/}
           <Routes>
             <Route path="/" element={<Shop />} />
             <Route path="/contact" element={<Contact />} />

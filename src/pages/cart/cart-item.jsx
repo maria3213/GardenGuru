@@ -18,7 +18,7 @@ export const CartItem = (props) => {
         <div className="countHandler">
           <button onClick={() => decrementFromCart(props.data.id)}> - </button>
           <input
-            value={cartItems[props.data.id]} //default value display 
+            value={cartItems[props.data.id]} 
             onChange={(e) => updateCartItemCount(Number(e.target.value), props.data.id)}
           />
           <button onClick={() => addToCart(props.data.id)}> + </button>

@@ -4,7 +4,7 @@ import { Card, CardMedia, CardContent, CardActions, Typography } from '@mui/mate
 
 import { Link } from "react-router-dom";
 
-export const Product = ({product}) => { //注意这里要解构product!!!
+export const Product = ({product}) => { //remember to destruct!
 
   // console.log(product);//to make sure which property names of product we want to use
 

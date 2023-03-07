@@ -3,12 +3,10 @@ import { createContext,  useState,useEffect } from "react";
 import { commerce } from '../lib/commerce';
 
 export const ShopContext = createContext(null);
-//create a store that have state and methods that are accessed for every components in the app
 
 
 export const ShopContextProvider = (props) => {
 
-  //for products:-----------------------------------------
   const [products,setProducts] = useState([]);
   const [cartItems, setCartItems] = useState({});
 
@@ -42,7 +40,6 @@ export const ShopContextProvider = (props) => {
   useEffect(() => { 
     setCartItems(getDefaultCart());
   },[products] );//
-  //要加 dependency array,否则产生infinite loop
   //不能使用[],要加上products,是因为最开始在mount时,products获取数据发生了update,然后由products更新引发这个callback
   //,如果为空的话,说明最开始在mount时,products获取数据的同时(!)创建cartCount,此时还没有products,所以创建cartCount失败
   //另外使用[cartCount]产生infinite loop
@@ -77,7 +74,7 @@ export const ShopContextProvider = (props) => {
     setCartItems((prev) => ({ ...prev, [itemId]: newAmount }));
   };
 
-  const checkout = () => {    //cart归零
+  const checkout = () => {    //clear cart
     setCartItems(getDefaultCart());
   };
 
